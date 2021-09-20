@@ -3,7 +3,6 @@ import s from './TodoListView.module.css';
 import TodoItem from '../TodoItem/index.jsx';
 
 export default class TodoListView extends Component {
-
   render() {
     const {
       itemList, onDelete, getList, editItem, setEditable, checkTodo,

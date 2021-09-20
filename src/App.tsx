@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import LoginView from './View/LoginView/index.jsx';
 import TodoPageView from './View/ToDoPageView/index.jsx';
-import "./styles/App.module.css"
+import './styles/App.module.css';
+import { IAppProps, IAppState, ITokens } from './types/generalTypes';
 
-class App extends Component {
-  constructor(props) {
+class App extends Component<IAppProps, IAppState> {
+  constructor(props:IAppProps) {
     super(props);
     this.state = {
       isLoggedIn: false,
@@ -13,7 +14,7 @@ class App extends Component {
     };
   }
 
-  getStatus=(tokens)=>{
+  getStatus=(tokens:ITokens):void => {
     this.setState({
       isLoggedIn: true,
       accessToken: tokens.accessToken,
@@ -22,6 +23,10 @@ class App extends Component {
   }
 
   render() {
+    console.log('props');
+
+    console.log(this.props);
+
     const { isLoggedIn, accessToken, refreshToken } = this.state;
     return (
       isLoggedIn ? <TodoPageView accessToken = {accessToken} refreshToken = {refreshToken} />
