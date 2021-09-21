@@ -2,8 +2,14 @@ import React, { Component } from 'react';
 import Button from '../../Components/Button/index.jsx';
 import Container from '../../Components/Container/index.jsx';
 import TextInput from '../../Components/TextInput/index.jsx';
-import s from './LoginView.module.css';
+import './LoginView.css';
 import UserController from '../../Controller/userController.jsx';
+
+// var b: Button | null;
+// var props: ButtonProps & ClassAttributes<Button> = {
+// ref: b => button = b, // ok!
+// label: "I'm a Button"
+// };
 
 class LoginView extends Component {
   constructor(props) {
@@ -43,8 +49,8 @@ class LoginView extends Component {
     const { email, password } = this.state;
     return (
       <Container>
-        <form className = {s.form} onSubmit = {(e) => this.handleSubmit(e)}>
-          <h1 className = {s.title}>Login...</h1>
+        <form className = "form" onSubmit = {(e) => this.handleSubmit(e)}>
+          <h1 className = "title">Login...</h1>
           <TextInput placeholder = "email" name = "email" value = {email} onChange = {(e) => this.onChange(e)} type = "text" />
           <TextInput placeholder = "password" name = "password" value = {password} onChange = {(e) => this.onChange(e)} type = "password" />
           <Button value = "Login" />

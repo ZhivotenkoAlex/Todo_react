@@ -5,12 +5,13 @@
 import React, { Component } from 'react';
 import Container from '../../Components/Container/index.jsx';
 import TextInput from '../../Components/TextInput/index.jsx';
-import s from './TodoPageView.module.css';
+import './TodoPageView.css';
 import TodoListView from '../TodoListView/index.jsx';
-import TodoController from '../../Controller/todoController.jsx';
+import TodoController from '../../Controller/todoController';
+import { ITodoPageProps, ITodoPageState } from '../../types/todoTypes';
 
-export default class TodoPageView extends Component {
-  constructor(props) {
+export default class TodoPageView extends Component<ITodoPageProps, ITodoPageState> {
+  constructor(props:ITodoPageProps) {
     super(props);
     this.state = {
       title: '',
@@ -23,7 +24,7 @@ export default class TodoPageView extends Component {
     this.getList();
   }
 
-  onChange(e) {
+  onChange(e:React.FormEvent<HTMLInputElement>) {
     const value = e.currentTarget.value;
     this.setState({ title: value });
   }
@@ -35,13 +36,13 @@ export default class TodoPageView extends Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  setEditable=(e) => {
-    if (e.detail === 2) {
+  setEditable=(e:React.UIEvent):void => {
+    if (e.detail as typeof e.detail === 2) {
       e.currentTarget.contentEditable = true;
     }
   }
 
-  checkTodo=async (id) => {
+  checkTodo=async (id:string) => {
     await this.state.todoController.setTodoItemStatusDone(id);
     this.getList();
   }
@@ -74,7 +75,7 @@ export default class TodoPageView extends Component {
        }
        this.getList();
        this.setState({ title: '' });
-     } catch (error) {
+     } catch (error:any) {
        console.log(error.message);
      }
    }
@@ -83,10 +84,10 @@ export default class TodoPageView extends Component {
      return (
        <Container>
          <form>
-           <h1 className = {s.title}>To Do List</h1>
-           <div className = {s.inputBlock}>
+           <h1 className = "title">To Do List</h1>
+           <div className = "inputBlock">
              <TextInput placeholder = "new task" value = {this.state.title} onChange = {(e) => this.onChange(e)} />
-             <a href = "" className = {s.addBtn} onClick = {(e) => this.handleSubmit(e)}>ADD</a>
+             <a href = "" className = "addBtn" onClick = {(e) => this.handleSubmit(e)}>ADD</a>
            </div>
          </form>
          <TodoListView

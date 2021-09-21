@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import LoginView from './View/LoginView/index.jsx';
-import TodoPageView from './View/ToDoPageView/index.jsx';
+// import LoginView from './View/LoginView/index.jsx';
+import TodoPageView from './View/ToDoPageView';
 import './styles/App.module.css';
-import { IAppProps, IAppState, ITokens } from './types/generalTypes';
+import { IAppState, ITokens } from './types/generalTypes';
 
-class App extends Component<IAppProps, IAppState> {
-  constructor(props:IAppProps) {
+class App extends Component<{}, IAppState> {
+  constructor(props:{}) {
     super(props);
     this.state = {
       isLoggedIn: false,
@@ -23,14 +23,12 @@ class App extends Component<IAppProps, IAppState> {
   }
 
   render() {
-    console.log('props');
-
-    console.log(this.props);
-
+    // eslint-disable-next-line no-unused-vars
     const { isLoggedIn, accessToken, refreshToken } = this.state;
     return (
-      isLoggedIn ? <TodoPageView accessToken = {accessToken} refreshToken = {refreshToken} />
-        : <LoginView getStatus = {this.getStatus} />
+      // isLoggedIn ? <TodoPageView accessToken = {accessToken} refreshToken = {refreshToken} />
+      //   : <LoginView getStatus = {this.getStatus} />
+      <TodoPageView accessToken = {accessToken} refreshToken = {refreshToken} />
     );
   }
 }

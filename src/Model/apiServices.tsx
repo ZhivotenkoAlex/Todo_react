@@ -1,32 +1,40 @@
 import { Component } from 'react';
+import {
+  IAccessToken,
+  IApiData,
+  IApiFetch,
+  IPostData,
+} from '../types/generalTypes';
+import { ITodo } from '../types/todoTypes';
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 // import 'regenerator-runtime/runtime';
 
 export default class apiServices extends Component {
-  constructor(props) {
+  constructor(props:string) {
     super(props);
   }
 
-   getById = async (data) => {
+   getById = async (data:IApiData):Promise<Error|ITodo> => {
      try {
        const response = await fetch(
          `${this.props}/api/todo/id?id=${data.id}&Authorization=${data.token}`,
        );
        return response.json();
-     } catch (error) {
-       return console.log(error);
+     } catch (error:any) {
+       return new Error(error);
      }
    }
 
-  getItems = async (data) => fetch(`${this.props}/api/todo?Authorization=Bearer ${data}`)
+  getItems = async (data:IAccessToken):Promise<Error|[]> => fetch(`${this.props}/api/todo?Authorization=Bearer ${data}`)
     .then((res) => res.clone().json())
     .catch((e) => console.log(e))
 
-  getUser = async (data) => fetch(`${this.props}/api/user?item=${data}`)
+  getUser = async (data:string):Promise<Response|void> => fetch(`${this.props}/api/user?item=${data}`)
     .then((res) => res.clone().json())
     .catch((e) => console.log(e.message))
 
-  deleteItem = async (endPoint, data) => {
+  deleteItem = async (endPoint:string, data:IApiData):Promise<Response> => {
     const response = await fetch(`${this.props}${endPoint}`, {
       method: 'DELETE',
       body: JSON.stringify(data),
@@ -34,7 +42,7 @@ export default class apiServices extends Component {
     return response.json();
   }
 
- patch = async (endPoint, data) => {
+ patch = async (endPoint:string, data:IApiFetch):Promise<{}> => {
    const response = await fetch(`${this.props}${endPoint}`, {
      method: 'PATCH',
      body: JSON.stringify(data),
@@ -42,7 +50,7 @@ export default class apiServices extends Component {
    return response.json();
  }
 
- post = async (endPoint, data) => fetch(`${this.props}${endPoint}`, {
+ post = async (endPoint:string, data:IPostData):Promise<void> => fetch(`${this.props}${endPoint}`, {
    method: 'POST',
    body: JSON.stringify(data),
  })
