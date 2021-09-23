@@ -3,12 +3,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/no-access-state-in-setstate */
 import React, { Component } from 'react';
-import Container from '../../Components/Container/index.jsx';
-import TextInput from '../../Components/TextInput/index.jsx';
-import './TodoPageView.css';
-import TodoListView from '../TodoListView/index.jsx';
+import Container from '../../Components/Container';
+import TextInput from '../../Components/TextInput';
+import './TodoPageView.scss';
+import TodoListView from '../TodoListView';
 import TodoController from '../../Controller/todoController';
 import { ITodoPageProps, ITodoPageState } from '../../types/todoTypes';
+import { ISpanContentEditable } from '../../types/componentsTypes';
 
 export default class TodoPageView extends Component<ITodoPageProps, ITodoPageState> {
   constructor(props:ITodoPageProps) {
@@ -24,12 +25,12 @@ export default class TodoPageView extends Component<ITodoPageProps, ITodoPageSta
     this.getList();
   }
 
-  onChange(e:React.FormEvent<HTMLInputElement>) {
+  onChange(e:React.FormEvent<HTMLInputElement>): void {
     const value = e.currentTarget.value;
     this.setState({ title: value });
   }
 
-  getList=async () => {
+  getList = async ():Promise<void> => {
     // eslint-disable-next-line react/destructuring-assignment
     const list = await this.state.todoController.getTodoItems(this.props.accessToken);
     this.setState({ items: list });
@@ -38,18 +39,18 @@ export default class TodoPageView extends Component<ITodoPageProps, ITodoPageSta
   // eslint-disable-next-line class-methods-use-this
   setEditable=(e:React.UIEvent):void => {
     if (e.detail as typeof e.detail === 2) {
-      e.currentTarget.contentEditable = true;
+      (e.currentTarget as unknown as ISpanContentEditable).contentEditable = true;
     }
   }
 
-  checkTodo=async (id:string) => {
+  checkTodo=async (id:string):Promise<void> => {
     await this.state.todoController.setTodoItemStatusDone(id);
     this.getList();
   }
 
-  todoEdit=(e) => {
+  todoEdit=(e:React.UIEvent<HTMLHtmlElement>&React.KeyboardEvent):void => {
     if (e.keyCode === 13) {
-      e.currentTarget.contentEditable = false;
+      (e.currentTarget as unknown as ISpanContentEditable).contentEditable = false;
       const id = e.currentTarget.id;
       this.state.todoController.editTodoItem(e, id);
     }
@@ -57,14 +58,13 @@ export default class TodoPageView extends Component<ITodoPageProps, ITodoPageSta
     this.getList();
   }
 
-  todoDelete=async (id) => {
+  todoDelete=async (id:string):Promise<void> => {
   // eslint-disable-next-line react/destructuring-assignment
     await this.state.todoController.deleteTodoItem(id);
     this.getList();
   }
 
-   handleSubmit = async (e) => {
-     console.log(this.state);
+   handleSubmit = async (e:React.FormEvent):Promise<void> => {
      e.preventDefault();
      const { todoController, title } = this.state;
      const { addTodoItem } = todoController;
@@ -84,10 +84,10 @@ export default class TodoPageView extends Component<ITodoPageProps, ITodoPageSta
      return (
        <Container>
          <form>
-           <h1 className = "title">To Do List</h1>
-           <div className = "inputBlock">
+           <h1 className = "todoPage__title">To Do List</h1>
+           <div className = "todoPage__inputBlock">
              <TextInput placeholder = "new task" value = {this.state.title} onChange = {(e) => this.onChange(e)} />
-             <a href = "" className = "addBtn" onClick = {(e) => this.handleSubmit(e)}>ADD</a>
+             <a href = "" className = "todoPage__addBtn" onClick = {(e) => this.handleSubmit(e)}>ADD</a>
            </div>
          </form>
          <TodoListView

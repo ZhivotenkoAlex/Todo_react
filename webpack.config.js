@@ -1,6 +1,9 @@
+/* eslint-disable global-require */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -20,10 +23,11 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
+        test: /\.scss$/,
         use: [
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           'css-loader',
+          'sass-loader',
         ],
       },
       {
@@ -49,6 +53,9 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name].bundle.[hash].css',
     }),
     new ForkTsCheckerWebpackPlugin({
       async: false,

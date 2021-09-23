@@ -1,0 +1,71 @@
+.todoItem {
+  &__listItem {
+    display: flex;
+    align-items: center;
+    width: 300px;
+    margin: 0 0 10px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #4c93a9;
+  }
+  &__checkBox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+  &__title {
+    width: 175px;
+    font-size: 24px;
+    background-color: rgb(245, 236, 220);
+    color: rgba(0, 0, 0, 0.7);
+  }
+
+  &__checkBox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  /*&__checkBox +&__label +&__title {
+    margin-left: 7px;
+  } */
+
+  &__checkedSpan {
+    color: #ee4b42;
+    text-decoration: line-through solid #ee4b42;
+  }
+
+  &__label {
+    position: absolute;
+    cursor: pointer;
+
+    &:before {
+      content: '';
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+    }
+    &::after {
+      content: '';
+      margin-left: 5px;
+      background-color: #ee4b42;
+      top: 3px;
+      left: 19px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &__label::after &__checkBox:checked {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 3px;
+    left: 19px;
+    width: 20px;
+    height: 20px;
+    background-image: url('http://cdn.onlinewebfonts.com/svg/img_358129.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: pointer;
+  }
+}

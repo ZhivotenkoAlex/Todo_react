@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-// import LoginView from './View/LoginView/index.jsx';
+import LoginView from './View/LoginView/index';
 import TodoPageView from './View/ToDoPageView';
-import './styles/App.module.css';
+import './styles/App.scss';
 import { IAppState, ITokens } from './types/generalTypes';
 
 class App extends Component<{}, IAppState> {
@@ -26,9 +26,8 @@ class App extends Component<{}, IAppState> {
     // eslint-disable-next-line no-unused-vars
     const { isLoggedIn, accessToken, refreshToken } = this.state;
     return (
-      // isLoggedIn ? <TodoPageView accessToken = {accessToken} refreshToken = {refreshToken} />
-      //   : <LoginView getStatus = {this.getStatus} />
-      <TodoPageView accessToken = {accessToken} refreshToken = {refreshToken} />
+      isLoggedIn ? <TodoPageView accessToken = {accessToken} refreshToken = {refreshToken} />
+        : <LoginView getStatus = {this.getStatus} />
     );
   }
 }

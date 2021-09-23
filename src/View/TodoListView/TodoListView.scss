@@ -1,0 +1,41 @@
+.todoList {
+  &__todoBox {
+    width: 350px;
+    display: flex;
+    justify-content: center;
+    margin: 15px auto 0 auto;
+    padding: 0 15px;
+    background-color: rgb(245, 236, 220);
+  }
+  &__list {
+    margin-bottom: 10px;
+    padding: 0;
+  }
+  &__title {
+    text-align: center;
+    font-size: 24px;
+    color: rgb(245, 236, 220);
+    margin-top: 0;
+  }
+
+  &__inputBlock {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 350px;
+    background-color: rgb(245, 236, 220);
+    margin: 0 auto;
+    padding: 15px 15px;
+  }
+
+  &__addBtn {
+    text-decoration: none;
+    font-weight: 700;
+    color: #1877f2;
+    margin-bottom: 15px;
+  }
+
+  &__loginTitle {
+    background-color: ivory;
+  }
+}

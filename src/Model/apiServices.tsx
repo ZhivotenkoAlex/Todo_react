@@ -1,8 +1,9 @@
 import { Component } from 'react';
+import { IUser } from '../types/authTypes';
 import {
-  IAccessToken,
   IApiData,
   IApiFetch,
+  IPost,
   IPostData,
 } from '../types/generalTypes';
 import { ITodo } from '../types/todoTypes';
@@ -15,7 +16,7 @@ export default class apiServices extends Component {
     super(props);
   }
 
-   getById = async (data:IApiData):Promise<Error|ITodo> => {
+   getById = async (data:IApiData):Promise<Error|ITodo[]> => {
      try {
        const response = await fetch(
          `${this.props}/api/todo/id?id=${data.id}&Authorization=${data.token}`,
@@ -26,11 +27,11 @@ export default class apiServices extends Component {
      }
    }
 
-  getItems = async (data:IAccessToken):Promise<Error|[]> => fetch(`${this.props}/api/todo?Authorization=Bearer ${data}`)
+  getItems = async (data:string):Promise<Error|[]> => fetch(`${this.props}/api/todo?Authorization=Bearer ${data}`)
     .then((res) => res.clone().json())
     .catch((e) => console.log(e))
 
-  getUser = async (data:string):Promise<Response|void> => fetch(`${this.props}/api/user?item=${data}`)
+  getUser = async (data:string):Promise< IUser|void> => fetch(`${this.props}/api/user?item=${data}`)
     .then((res) => res.clone().json())
     .catch((e) => console.log(e.message))
 
@@ -50,7 +51,7 @@ export default class apiServices extends Component {
    return response.json();
  }
 
- post = async (endPoint:string, data:IPostData):Promise<void> => fetch(`${this.props}${endPoint}`, {
+ post = async (endPoint:string, data:IPostData):Promise<void|IPost> => fetch(`${this.props}${endPoint}`, {
    method: 'POST',
    body: JSON.stringify(data),
  })

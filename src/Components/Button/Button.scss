@@ -10,9 +10,8 @@
   background-color: rgb(31, 31, 31);
   outline: none;
   border: none;
-}
-
-.button:hover {
-  background-color: rgb(177, 177, 177);
-  color: rgb(31, 31, 31);
+  &:hover {
+    background-color: rgb(177, 177, 177);
+    color: rgb(31, 31, 31);
+  }
 }

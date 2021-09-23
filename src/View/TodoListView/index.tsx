@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import s from './TodoListView.module.css';
-import TodoItem from '../TodoItem/index.jsx';
+import './TodoListView.scss';
+import TodoItem from '../TodoItem';
+import { ITodoListProps, ITodoListState } from '../../types/authTypes';
 
-export default class TodoListView extends Component {
+export default class TodoListView extends Component<ITodoListProps, ITodoListState> {
   render() {
     const {
       itemList, onDelete, getList, editItem, setEditable, checkTodo,
     } = this.props;
     return (
-      <div className = {s.todoBox}>
-        <ul className = {s.list}>
-          {itemList && itemList.map(({ id, text, checked }) => (
+      <div className = "todoList__todoBox">
+        <ul className = "todoList__list">
+          {(itemList as []).map(({ id, text, checked }) => (
             <TodoItem
               isChecked = {!!checked}
               key = {id}
