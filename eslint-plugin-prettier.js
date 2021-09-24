@@ -6,5 +6,5 @@ const configs = {
       'prettier/prettier': 'error',
     },
   },
-};
-export default configs;
+}
+export default configs

@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import LoginView from './View/LoginView/index';
-import TodoPageView from './View/ToDoPageView';
-import './styles/App.scss';
-import { IAppState, ITokens } from './types/generalTypes';
+import React, { Component } from 'react'
+import LoginView from './View/LoginView/index'
+import TodoPageView from './View/ToDoPageView'
+import './styles/App.scss'
+import { IAppState, ITokens } from './types/generalTypes'
 
 class App extends Component<{}, IAppState> {
   constructor(props:{}) {
-    super(props);
+    super(props)
     this.state = {
       isLoggedIn: false,
       accessToken: '',
       refreshToken: '',
-    };
+    }
   }
 
   getStatus=(tokens:ITokens):void => {
@@ -19,17 +19,16 @@ class App extends Component<{}, IAppState> {
       isLoggedIn: true,
       accessToken: tokens.accessToken,
       refreshToken: tokens.refreshToken,
-    });
+    })
   }
 
   render() {
-    // eslint-disable-next-line no-unused-vars
-    const { isLoggedIn, accessToken, refreshToken } = this.state;
+    const { isLoggedIn, accessToken, refreshToken } = this.state
     return (
       isLoggedIn ? <TodoPageView accessToken = {accessToken} refreshToken = {refreshToken} />
         : <LoginView getStatus = {this.getStatus} />
-    );
+    )
   }
 }
 
-export default App;
+export default App

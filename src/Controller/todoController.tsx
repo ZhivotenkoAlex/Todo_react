@@ -1,76 +1,83 @@
-import React, { Component } from 'react';
-import ApiServices from '../Model/apiServices';
+import React, { Component } from 'react'
+import ApiServices from '../Model/apiServices'
 import {
   ITodoControllerProps, ITodoControllerState, ITodoSetTodoData,
-} from '../types/todoTypes';
+} from '../types/todoTypes'
 
 export default class TodoController extends Component<ITodoControllerProps, ITodoControllerState> {
   constructor(props:ITodoControllerProps) {
-    super(props);
+    super(props)
     this.state = {
       token: props.token,
       api: new ApiServices('http://localhost:8080'),
-    };
+    }
   }
 
   getTodoItems=async (token:string):Promise<Error|[]> => {
-    const { getItems } = this.state.api;
+    const { getItems } = this.state.api
     if (token) {
-      const items = await getItems(token);
-      return items;
+      const items = await getItems(token)
+      return items
     }
-    return new Error('token is no exist');
+    return new Error('token is no exist')
   }
 
   setTodoItemStatusDone = async (id:string):Promise<void> => {
-    const { api, token } = this.state;
-    const todo = await api.getById({
+    const { api, token } = this.state
+    const { getById } = api
+
+    const todo = await getById({
       id,
       token: `Bearer ${token}`,
-    });
+    })
     if (todo instanceof Error) {
-      return console.log('bull shit');
+      return console.log('bull shit')
     }
-    const check = todo[0];
+    const check = todo[0]
 
     const data:ITodoSetTodoData = {
       id,
       checked: !check.checked,
       token: `Bearer ${token}`,
-    };
-    await api.patch('/api/todo/check', data);
-    return undefined;
+    }
+    await api.patch('/api/todo/check', data)
+    return undefined
   }
 
   editTodoItem = async (e:React.UIEvent<HTMLHtmlElement>&React.KeyboardEvent, id:string)
   :Promise<void> => {
-    const { api, token } = this.state;
-    await api.patch('/api/todo/title', {
+    const { api, token } = this.state
+    const { patch } = api
+
+    await patch('/api/todo/title', {
       id,
       title: e.currentTarget.innerText,
       token: `Bearer ${token}`,
-    });
+    })
   }
 
  deleteTodoItem= async (id:string):Promise<void> => {
-   const { api, token } = this.state;
+   const { api, token } = this.state
+   const { deleteItem } = api
 
-   await api.deleteItem('/api/todo', {
+   await deleteItem('/api/todo', {
      id,
      token: `Bearer ${token}`,
-   });
+   })
  }
 
  addTodoItem= async (item:string):Promise<Error|string> => { // ok
-   const { api, token } = this.state;
+   const { api, token } = this.state
+   const { post } = api
+
    if (item !== '') {
      const newTodo = {
        title: item,
        token: `Bearer ${token}`,
-     };
-     await api.post('/api/todo', newTodo);
-     return 'todo was added';
+     }
+     await post('/api/todo', newTodo)
+     return 'todo was added'
    }
-   return new Error('Can\'t add empty task');
+   return new Error('Can\'t add empty task')
  }
 }

@@ -1,29 +1,26 @@
-import { Component } from 'react';
-import { IUser } from '../types/authTypes';
+import { Component } from 'react'
+import { IUser } from '../types/authTypes'
 import {
   IApiData,
   IApiFetch,
   IPost,
   IPostData,
-} from '../types/generalTypes';
-import { ITodo } from '../types/todoTypes';
-
-// eslint-disable-next-line import/no-extraneous-dependencies
-// import 'regenerator-runtime/runtime';
+} from '../types/generalTypes'
+import { ITodo } from '../types/todoTypes'
 
 export default class apiServices extends Component {
   constructor(props:string) {
-    super(props);
+    super(props)
   }
 
    getById = async (data:IApiData):Promise<Error|ITodo[]> => {
      try {
        const response = await fetch(
          `${this.props}/api/todo/id?id=${data.id}&Authorization=${data.token}`,
-       );
-       return response.json();
+       )
+       return response.json()
      } catch (error:any) {
-       return new Error(error);
+       return new Error(error)
      }
    }
 
@@ -39,16 +36,16 @@ export default class apiServices extends Component {
     const response = await fetch(`${this.props}${endPoint}`, {
       method: 'DELETE',
       body: JSON.stringify(data),
-    });
-    return response.json();
+    })
+    return response.json()
   }
 
  patch = async (endPoint:string, data:IApiFetch):Promise<{}> => {
    const response = await fetch(`${this.props}${endPoint}`, {
      method: 'PATCH',
      body: JSON.stringify(data),
-   });
-   return response.json();
+   })
+   return response.json()
  }
 
  post = async (endPoint:string, data:IPostData):Promise<void|IPost> => fetch(`${this.props}${endPoint}`, {

@@ -1,5 +1,5 @@
-import React from 'react';
-import './Checkbox.scss';
+import React from 'react'
+import './Checkbox.scss'
 
 function Checkbox(id:string) {
   return (
@@ -8,7 +8,7 @@ function Checkbox(id:string) {
       <input type = "checkbox" className = "checkBox" id = {id} />
     </label>
 
-  );
+  )
 }
 
-export default Checkbox;
+export default Checkbox

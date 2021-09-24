@@ -1,5 +1,5 @@
-import { IUser } from './authTypes';
-import { ITodo } from './todoTypes';
+import { IUser } from './authTypes'
+import { ITodo } from './todoTypes'
 
 /* eslint-disable no-unused-vars */
 export interface IAppClass{

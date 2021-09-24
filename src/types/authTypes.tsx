@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
-import { ITokens, IApi, IPostData } from './generalTypes';
+import React from 'react'
+import { ITokens, IApi, IPostData } from './generalTypes'
 
 export interface ILoginPageProps{
     getStatus:(tokens:ITokens)=>void

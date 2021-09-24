@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
-import { IApi } from './generalTypes';
+import React from 'react'
+import { IApi } from './generalTypes'
 
 export interface ITodoPageProps{
 accessToken:string,

@@ -34,6 +34,7 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'react/prop-types': 'off',
+    semi: ['error', 'never'],
   },
   extends: ['airbnb'],
   settings: {
@@ -44,4 +45,4 @@ module.exports = {
     'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
     // import/parsers : @typescript-eslint/parser: [ .ts, .tsx ]
   },
-};
+}

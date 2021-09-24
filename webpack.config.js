@@ -1,9 +1,9 @@
 /* eslint-disable global-require */
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-// const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const PrettierPlugin = require('prettier-webpack-plugin')
 
 module.exports = {
   mode: 'development',
@@ -54,6 +54,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
+    new PrettierPlugin({
+      semi: true,
+      trailingComma: 'all',
+      singleQuote: true,
+      printWidth: 120,
+      tabWidth: 2,
+      arrowParens: 'avoid',
+    }),
     new MiniCssExtractPlugin({
       filename: '[name].bundle.[hash].css',
     }),
@@ -65,4 +73,4 @@ module.exports = {
     }),
   ],
 
-};
+}
