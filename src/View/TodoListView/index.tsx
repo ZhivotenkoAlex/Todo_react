@@ -5,23 +5,21 @@ import { ITodoListProps, ITodoListState } from '../../types/authTypes'
 
 export default class TodoListView extends Component<ITodoListProps, ITodoListState> {
   render() {
-    const {
-      itemList, onDelete, getList, editItem, setEditable, checkTodo,
-    } = this.props
+    const { itemList, onDelete, getList, editItem, setEditable, checkTodo } = this.props
     return (
-      <div className = "todoList__todoBox">
-        <ul className = "todoList__list">
-          {(itemList as []).map(({ id, text, checked }) => (/* set interface for ItemList */
+      <div className="todoList__todoBox">
+        <ul className="todoList__list">
+          {(itemList as []).map(({ id, text, checked } /* set interface for ItemList */) => (
             <TodoItem
-              isChecked = {!!checked}
-              key = {id}
-              id = {id}
-              title = {text}
-              onDelete = {onDelete}
-              getList = {getList}
-              editItem = {editItem}
-              setEditable = {setEditable}
-              checkTodo = {checkTodo}
+              isChecked={!!checked}
+              key={id}
+              id={id}
+              title={text}
+              onDelete={onDelete}
+              getList={getList}
+              editItem={editItem}
+              setEditable={setEditable}
+              checkTodo={checkTodo}
             />
           ))}
         </ul>

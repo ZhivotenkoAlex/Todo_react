@@ -5,7 +5,7 @@ import './styles/App.scss'
 import { IAppState, ITokens } from './types/generalTypes'
 
 class App extends Component<{}, IAppState> {
-  constructor(props:{}) {
+  constructor(props: {}) {
     super(props)
     this.state = {
       isLoggedIn: false,
@@ -14,7 +14,7 @@ class App extends Component<{}, IAppState> {
     }
   }
 
-  getStatus=(tokens:ITokens):void => {
+  getStatus = (tokens: ITokens): void => {
     this.setState({
       isLoggedIn: true,
       accessToken: tokens.accessToken,
@@ -24,9 +24,10 @@ class App extends Component<{}, IAppState> {
 
   render() {
     const { isLoggedIn, accessToken, refreshToken } = this.state
-    return (
-      isLoggedIn ? <TodoPageView accessToken = {accessToken} refreshToken = {refreshToken} />
-        : <LoginView getStatus = {this.getStatus} />
+    return isLoggedIn ? (
+      <TodoPageView accessToken={accessToken} refreshToken={refreshToken} />
+    ) : (
+      <LoginView getStatus={this.getStatus} />
     )
   }
 }

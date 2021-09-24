@@ -4,14 +4,14 @@ import { IUserControllerState, ICredentials, IUser } from '../types/authTypes'
 import { IPostData } from '../types/generalTypes'
 
 export default class UserController extends Component<{}, IUserControllerState> {
-  constructor(props:{}) {
+  constructor(props: {}) {
     super(props)
     this.state = {
       api: new ApiServices('http://localhost:8080'),
     }
   }
 
-  async login(data:ICredentials):Promise<IPostData|Error> {
+  async login(data: ICredentials): Promise<IPostData | Error> {
     try {
       const { email, password } = data
       const { api } = this.state
@@ -26,12 +26,12 @@ export default class UserController extends Component<{}, IUserControllerState> 
         return tokens as IPostData
       }
       return new Error('Wrong credentials')
-    } catch (error:any) {
+    } catch (error: any) {
       return new Error(error.message)
     }
   }
 
-  async register(data:ICredentials):Promise<Error|string> {
+  async register(data: ICredentials): Promise<Error | string> {
     try {
       const { api } = this.state
       const { post } = api
@@ -41,21 +41,18 @@ export default class UserController extends Component<{}, IUserControllerState> 
       })
 
       return `User "${data.email}" was added!`
-    } catch (error:any) {
+    } catch (error: any) {
       return new Error(error.message)
     }
   }
 
-  async authentification(data:ICredentials):Promise<IPostData|Error|string|void> {
+  async authentification(data: ICredentials): Promise<IPostData | Error | string | void> {
     const isLoggedIn = await this.isLoggedIn(data.email)
     const messageEmptyFields = 'Please, enter your email and password'
     const messageValidateEmail = 'Please, enter the correct email using the following pattern: xxxx@xxx.xx'
     const messagePasswordLength = 'Please lengthen this text to 6 characters or more'
     const { email, password } = data
-    if (
-      data.email === ''
-          || data.password === ''
-    ) {
+    if (data.email === '' || data.password === '') {
       return new Error(messageEmptyFields)
     }
     if (!this.validateEmail(data.email)) {
@@ -75,20 +72,22 @@ export default class UserController extends Component<{}, IUserControllerState> 
     return undefined
   }
 
-  async isLoggedIn(email:string):Promise<Boolean|Error> {
+  async isLoggedIn(email: string): Promise<Boolean | Error> {
     const { api } = this.state
     const { getUser } = api
     try {
-      const user = await getUser(email) as IUser
+      const user = (await getUser(email)) as IUser
       return !!user.userId
-    } catch (error:any) {
+    } catch (error: any) {
       return new Error(error.message)
     }
   }
 
   // eslint-disable-next-line class-methods-use-this
-  validateEmail(email:string):Boolean {
-    const reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+  validateEmail(email: string): Boolean {
+    // eslint-disable-next-line operator-linebreak
+    const reg =
+      /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
     return reg.test(String(email).toLowerCase())
   }
 }

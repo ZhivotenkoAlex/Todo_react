@@ -1,13 +1,11 @@
 import React from 'react'
 import './Checkbox.scss'
 
-function Checkbox(id:string) {
+function Checkbox(id: string) {
   return (
-
-    <label htmlFor = {id} className = "label">
-      <input type = "checkbox" className = "checkBox" id = {id} />
+    <label htmlFor={id} className="label">
+      <input type="checkbox" className="checkBox" id={id} />
     </label>
-
   )
 }
 

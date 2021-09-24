@@ -1,7 +1,7 @@
 const configs = {
   recommended: {
-    extends: ['prettier'],
-    plugins: ['prettier'],
+    extends: ['airbnb'],
+    plugins: ['airbnb'],
     rules: {
       'prettier/prettier': 'error',
     },

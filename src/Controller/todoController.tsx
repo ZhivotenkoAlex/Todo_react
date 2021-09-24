@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import ApiServices from '../Model/apiServices'
-import {
-  ITodoControllerProps, ITodoControllerState, ITodoSetTodoData,
-} from '../types/todoTypes'
+import { ITodoControllerProps, ITodoControllerState, ITodoSetTodoData } from '../types/todoTypes'
 
 export default class TodoController extends Component<ITodoControllerProps, ITodoControllerState> {
-  constructor(props:ITodoControllerProps) {
+  constructor(props: ITodoControllerProps) {
     super(props)
     this.state = {
       token: props.token,
@@ -13,7 +11,7 @@ export default class TodoController extends Component<ITodoControllerProps, ITod
     }
   }
 
-  getTodoItems=async (token:string):Promise<Error|[]> => {
+  getTodoItems = async (token: string): Promise<Error | []> => {
     const { getItems } = this.state.api
     if (token) {
       const items = await getItems(token)
@@ -22,7 +20,7 @@ export default class TodoController extends Component<ITodoControllerProps, ITod
     return new Error('token is no exist')
   }
 
-  setTodoItemStatusDone = async (id:string):Promise<void> => {
+  setTodoItemStatusDone = async (id: string): Promise<void> => {
     const { api, token } = this.state
     const { getById } = api
 
@@ -35,7 +33,7 @@ export default class TodoController extends Component<ITodoControllerProps, ITod
     }
     const check = todo[0]
 
-    const data:ITodoSetTodoData = {
+    const data: ITodoSetTodoData = {
       id,
       checked: !check.checked,
       token: `Bearer ${token}`,
@@ -44,8 +42,8 @@ export default class TodoController extends Component<ITodoControllerProps, ITod
     return undefined
   }
 
-  editTodoItem = async (e:React.UIEvent<HTMLHtmlElement>&React.KeyboardEvent, id:string)
-  :Promise<void> => {
+  // eslint-disable-next-line max-len
+  editTodoItem = async (e: React.UIEvent<HTMLHtmlElement> & React.KeyboardEvent, id: string): Promise<void> => {
     const { api, token } = this.state
     const { patch } = api
 
@@ -56,28 +54,30 @@ export default class TodoController extends Component<ITodoControllerProps, ITod
     })
   }
 
- deleteTodoItem= async (id:string):Promise<void> => {
-   const { api, token } = this.state
-   const { deleteItem } = api
+  deleteTodoItem = async (id: string): Promise<void> => {
+    const { api, token } = this.state
+    const { deleteItem } = api
 
-   await deleteItem('/api/todo', {
-     id,
-     token: `Bearer ${token}`,
-   })
- }
+    await deleteItem('/api/todo', {
+      id,
+      token: `Bearer ${token}`,
+    })
+  }
 
- addTodoItem= async (item:string):Promise<Error|string> => { // ok
-   const { api, token } = this.state
-   const { post } = api
+  addTodoItem = async (item: string): Promise<Error | string> => {
+    // ok
+    const { api, token } = this.state
+    const { post } = api
 
-   if (item !== '') {
-     const newTodo = {
-       title: item,
-       token: `Bearer ${token}`,
-     }
-     await post('/api/todo', newTodo)
-     return 'todo was added'
-   }
-   return new Error('Can\'t add empty task')
- }
+    if (item !== '') {
+      const newTodo = {
+        title: item,
+        token: `Bearer ${token}`,
+      }
+      await post('/api/todo', newTodo)
+      return 'todo was added'
+    }
+    // eslint-disable-next-line quotes
+    return new Error("Can't add empty task")
+  }
 }
