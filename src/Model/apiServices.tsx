@@ -10,7 +10,9 @@ export default class apiServices extends Component {
 
   getById = async (data: IApiData): Promise<Error | ITodo[]> => {
     try {
-      const response = await fetch(`${this.props}/api/todo/id?id=${data.id}&Authorization=${data.token}`)
+      const response = await fetch(
+        `${this.props}/api/todo/id?id=${data.id}&Authorization=${data.token}`,
+      )
       return response.json()
     } catch (error: any) {
       return new Error(error)

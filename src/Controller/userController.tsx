@@ -49,7 +49,7 @@ export default class UserController extends Component<{}, IUserControllerState> 
   async authentification(data: ICredentials): Promise<IPostData | Error | string | void> {
     const isLoggedIn = await this.isLoggedIn(data.email)
     const messageEmptyFields = 'Please, enter your email and password'
-    const messageValidateEmail = 'Please, enter the correct email using the following pattern: xxxx@xxx.xx'
+    const messageValidateEmail = 'Please, enter email using the following pattern: xxxx@xxx.xx'
     const messagePasswordLength = 'Please lengthen this text to 6 characters or more'
     const { email, password } = data
     if (data.email === '' || data.password === '') {

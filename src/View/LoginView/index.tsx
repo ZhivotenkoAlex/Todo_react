@@ -17,7 +17,7 @@ class LoginView extends Component<ILoginPageProps, IState> {
     }
   }
 
-  handleSubmit(e: React.FormEvent) {
+  handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const { getStatus } = this.props
     try {
@@ -44,7 +44,7 @@ class LoginView extends Component<ILoginPageProps, IState> {
     }
   }
 
-  onChangePassword(e: React.FormEvent<HTMLInputElement>): void {
+  onChangePassword = (e: React.FormEvent<HTMLInputElement>): void => {
     const { value } = e.currentTarget
     this.setState(state => ({
       ...state,
@@ -52,7 +52,7 @@ class LoginView extends Component<ILoginPageProps, IState> {
     }))
   }
 
-  onChangeEmail(e: React.FormEvent<HTMLInputElement>): void {
+  onChangeEmail = (e: React.FormEvent<HTMLInputElement>): void => {
     const { value } = e.currentTarget
     this.setState(state => ({
       ...state,
@@ -64,14 +64,20 @@ class LoginView extends Component<ILoginPageProps, IState> {
     const { email, password } = this.state
     return (
       <Container>
-        <form className="loginView__form" onSubmit={e => this.handleSubmit(e)}>
+        <form className="loginView__form" onSubmit={this.handleSubmit}>
           <h1 className="loginView__formtitle">Login...</h1>
-          <TextInput placeholder="email" name="email" value={email} onChange={e => this.onChangeEmail(e)} type="text" />
+          <TextInput
+            placeholder="email"
+            name="email"
+            value={email}
+            onChange={this.onChangeEmail}
+            type="text"
+          />
           <TextInput
             placeholder="password"
             name="password"
             value={password}
-            onChange={e => this.onChangePassword(e)}
+            onChange={this.onChangePassword}
             type="password"
           />
           <Button value="Login" />

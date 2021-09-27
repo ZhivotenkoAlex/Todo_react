@@ -11,7 +11,7 @@ export default class TodoItem extends Component<ITodoItemProps, ITodoItemState> 
     }
   }
 
-  handleChange(): void {
+  handleChange = (): void => {
     const { check } = this.state
     const { id } = this.props
 

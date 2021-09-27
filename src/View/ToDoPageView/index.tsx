@@ -25,7 +25,7 @@ export default class TodoPageView extends Component<ITodoPageProps, ITodoPageSta
     this.getList()
   }
 
-  onChange(e: React.FormEvent<HTMLInputElement>): void {
+  onChange = (e: React.FormEvent<HTMLInputElement>): void => {
     const value = e.currentTarget.value
     this.setState({ title: value })
   }

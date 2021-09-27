@@ -43,7 +43,10 @@ export default class TodoController extends Component<ITodoControllerProps, ITod
   }
 
   // eslint-disable-next-line max-len
-  editTodoItem = async (e: React.UIEvent<HTMLHtmlElement> & React.KeyboardEvent, id: string): Promise<void> => {
+  editTodoItem = async (
+    e: React.UIEvent<HTMLHtmlElement> & React.KeyboardEvent,
+    id: string,
+  ): Promise<void> => {
     const { api, token } = this.state
     const { patch } = api
 

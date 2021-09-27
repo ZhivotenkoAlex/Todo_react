@@ -7,21 +7,20 @@
     padding-bottom: 10px;
     border-bottom: 1px solid #4c93a9;
   }
-  &__checkBox {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-  }
+
   &__title {
     width: 175px;
     font-size: 24px;
     background-color: rgb(245, 236, 220);
     color: rgba(0, 0, 0, 0.7);
+    margin-left: 30px;
   }
 
   &__checkBox {
+    position: absolute;
     width: 20px;
     height: 20px;
+    left: 20px;
     cursor: pointer;
   }
 
