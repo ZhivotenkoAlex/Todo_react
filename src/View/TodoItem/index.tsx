@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import DeleteButton from '../../Components/DeleteButton'
 import './TodoItem.scss'
 import { ITodoItemProps, ITodoItemState } from '../../types/authTypes'
+// import { getState } from '../../redux/store'
 
 export default class TodoItem extends Component<ITodoItemProps, ITodoItemState> {
   constructor(props: ITodoItemProps) {

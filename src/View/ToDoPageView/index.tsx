@@ -1,5 +1,4 @@
 /* eslint-disable react/destructuring-assignment */
-/* eslint-disable prefer-destructuring */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/no-access-state-in-setstate */
 import React, { Component } from 'react'
@@ -10,6 +9,7 @@ import TodoListView from '../TodoListView'
 import TodoController from '../../Controller/todoController'
 import { ITodoPageProps, ITodoPageState } from '../../types/todoTypes'
 import { ISpanContentEditable } from '../../types/componentsTypes'
+import { getState } from '../../redux/store'
 
 export default class TodoPageView extends Component<ITodoPageProps, ITodoPageState> {
   constructor(props: ITodoPageProps) {
@@ -26,12 +26,12 @@ export default class TodoPageView extends Component<ITodoPageProps, ITodoPageSta
   }
 
   onChange = (e: React.FormEvent<HTMLInputElement>): void => {
-    const value = e.currentTarget.value
+    const { value } = e.currentTarget
     this.setState({ title: value })
   }
 
   getList = async (): Promise<void> => {
-    const { accessToken } = this.props
+    const { accessToken } = getState()
     const list = await this.state.todoController.getTodoItems(accessToken)
     this.setState({ items: list })
   }
@@ -50,7 +50,7 @@ export default class TodoPageView extends Component<ITodoPageProps, ITodoPageSta
   todoEdit = (e: React.UIEvent<HTMLHtmlElement> & React.KeyboardEvent): void => {
     if (e.keyCode === 13) {
       ;(e.currentTarget as unknown as ISpanContentEditable).contentEditable = false
-      const id = e.currentTarget.id
+      const { id } = e.currentTarget
       const { editTodoItem } = this.state.todoController
       editTodoItem(e, id)
     }

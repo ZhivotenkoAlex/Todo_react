@@ -4,22 +4,27 @@ import Container from '../../Components/Container'
 import TextInput from '../../Components/TextInput'
 import './LoginView.scss'
 import UserController from '../../Controller/userController'
-import { ILoginPageProps, IState } from '../../types/authTypes'
+import { IState } from '../../types/authTypes'
 import { ITokens } from '../../types/generalTypes'
+import { dispatch } from '../../redux/store'
+import { Context } from '../../Context'
 
-class LoginView extends Component<ILoginPageProps, IState> {
-  constructor(props: ILoginPageProps) {
+class LoginView extends Component<{}, IState> {
+  // eslint-disable-next-line react/static-property-placement
+  static contextType = Context
+
+  constructor(props: {}) {
     super(props)
     this.state = {
       email: '',
       password: '',
       user: new UserController({}),
+      isLogin: false,
     }
   }
 
   handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const { getStatus } = this.props
     try {
       const { email, password, user } = this.state
       const data = {
@@ -33,14 +38,22 @@ class LoginView extends Component<ILoginPageProps, IState> {
             console.log(res.message)
             return null
           }
-          getStatus(res as ITokens)
+          const { accessToken, refreshToken } = res as ITokens
+          dispatch({
+            type: 'GET_STATE',
+            payload: {
+              isLoggedIn: true,
+              accessToken,
+              refreshToken,
+            },
+          })
           return null
         })
-        .catch(error => {
-          console.log(error)
-        })
+        .then(this.context.toggleLog())
     } catch (error) {
       console.log(error)
+    } finally {
+      this.context.toggleLog()
     }
   }
 

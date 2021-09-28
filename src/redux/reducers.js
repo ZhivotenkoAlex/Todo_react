@@ -9,9 +9,9 @@ function reducer(action, state = initialState) {
     case 'GET_STATE':
       return {
         ...state,
-        isLoggedIn: [action.isLoggedIn],
-        accessToken: [action.accessToken],
-        refreshToken: [action.refreshToken],
+        isLoggedIn: action.payload.isLoggedIn,
+        accessToken: action.payload.accessToken,
+        refreshToken: action.payload.refreshToken,
       }
 
     default:

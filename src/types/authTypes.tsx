@@ -2,9 +2,9 @@
 import React from 'react'
 import { ITokens, IApi, IPostData } from './generalTypes'
 
-export interface ILoginPageProps {
-  getStatus: (tokens: ITokens) => void
-}
+// export interface ILoginPageProps {
+//   getStatus: (tokens: ITokens) => void
+// }
 
 export interface ILoginPageState {
   user: IUserController
@@ -47,6 +47,7 @@ export interface IState {
   email: string
   password: string
   user: IUserController
+  isLogin: Boolean
 }
 
 export interface ITodoItemProps {

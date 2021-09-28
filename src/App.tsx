@@ -1,33 +1,25 @@
+/* eslint-disable react/static-property-placement */
 import React, { Component } from 'react'
 import LoginView from './View/LoginView/index'
 import TodoPageView from './View/ToDoPageView'
 import './styles/App.scss'
-import { IAppState, ITokens } from './types/generalTypes'
+import { Context } from './Context'
 
-class App extends Component<{}, IAppState> {
+class App extends Component<{}, {}> {
+  // eslint-disable-next-line react/static-property-placement
+  static contextType = Context
+
   constructor(props: {}) {
     super(props)
-    this.state = {
-      isLoggedIn: false,
-      accessToken: '',
-      refreshToken: '',
-    }
-  }
-
-  getStatus = (tokens: ITokens): void => {
-    this.setState({
-      isLoggedIn: true,
-      accessToken: tokens.accessToken,
-      refreshToken: tokens.refreshToken,
-    })
   }
 
   render() {
-    const { isLoggedIn, accessToken, refreshToken } = this.state
+    const { isLoggedIn, accessToken, refreshToken } = this.context
+
     return isLoggedIn ? (
       <TodoPageView accessToken={accessToken} refreshToken={refreshToken} />
     ) : (
-      <LoginView getStatus={this.getStatus} />
+      <LoginView />
     )
   }
 }
