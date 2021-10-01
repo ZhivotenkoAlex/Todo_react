@@ -1,5 +1,4 @@
 /* eslint-disable react/no-access-state-in-setstate */
-/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/state-in-constructor */
 import React, { Component, createContext } from 'react'
 import { getState } from './redux/store'
@@ -27,9 +26,10 @@ class LogProvider extends Component<{}, contextState> {
   }
 
   render() {
+    const { children } = this.props
     return (
       <Context.Provider value={{ ...this.state, toggleLog: this.toggleLog }}>
-        {this.props.children}
+        {children}
       </Context.Provider>
     )
   }
