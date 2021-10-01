@@ -1,26 +1,35 @@
+/* eslint-disable react/no-unused-state */
 import React, { Component } from 'react'
 import './TodoListView.scss'
 import TodoItem from '../TodoItem'
-import { ITodoListProps, ITodoListState } from '../../types/authTypes'
+import { getState } from '../../redux/store'
+import { ITodo } from '../../types/todoTypes'
 
-export default class TodoListView extends Component<ITodoListProps, ITodoListState> {
+export default class TodoListView extends Component<{}, { list: ITodo[] | [] }> {
+  constructor(props: {}) {
+    super(props)
+    this.state = {
+      list: [],
+    }
+  }
+
+  componentDidMount() {
+    const arr = async () => {
+      this.setState({
+        list: getState(),
+      })
+    }
+    arr()
+  }
+
   render() {
-    const { itemList, onDelete, getList, editItem, setEditable, checkTodo } = this.props
+    const { itemList } = getState()
+
     return (
       <div className="todoList__todoBox">
         <ul className="todoList__list">
-          {(itemList as []).map(({ id, text, checked } /* set interface for ItemList */) => (
-            <TodoItem
-              isChecked={!!checked}
-              key={id}
-              id={id}
-              title={text}
-              onDelete={onDelete}
-              getList={getList}
-              editItem={editItem}
-              setEditable={setEditable}
-              checkTodo={checkTodo}
-            />
+          {(itemList as ITodo[]).map(({ id, text, checked }) => (
+            <TodoItem isChecked={!!checked} key={id} id={id} title={text} />
           ))}
         </ul>
       </div>

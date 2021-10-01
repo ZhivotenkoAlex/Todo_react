@@ -8,7 +8,7 @@ export interface ITodoPageProps {
 }
 export interface ITodoPageState {
   title: string
-  items: [] | Error
+  items?: [] | Error
   todoController: ITodoController
 }
 export interface ITodoControllerProps {
@@ -20,15 +20,18 @@ export interface ITodoControllerState {
 }
 
 export interface ITodoController {
-  getTodoItems(token: string): Promise<Error | []>
-  setTodoItemStatusDone(id: string): Promise<void>
-  editTodoItem(e: React.UIEvent<HTMLHtmlElement> & React.KeyboardEvent, id: string): Promise<void>
-  deleteTodoItem(id: string): Promise<void>
-  addTodoItem(item: string): Promise<Error | string>
+  getTodoItems(): Promise<Error | []>
+  setTodoItemStatusDone(id: string): Promise<Error | [] | void>
+  editTodoItem(incomingData: {
+    e: React.UIEvent<HTMLHtmlElement> & React.KeyboardEvent
+    id: string
+  }): Promise<Error | [] | void>
+  deleteTodoItem(id: string): Promise<Error | [] | void>
+  addTodoItem(item: string): Promise<Error | []>
 }
 
 export interface ITodo {
-  id: number
+  id: string
   text: string
   checked: number
   userId: number

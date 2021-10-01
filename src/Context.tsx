@@ -3,7 +3,6 @@
 /* eslint-disable react/state-in-constructor */
 import React, { Component, createContext } from 'react'
 import { getState } from './redux/store'
-// import { IAppState } from './types/generalTypes'
 
 type contextState = {
   accessToken: string

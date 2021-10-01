@@ -2,28 +2,29 @@ import React, { Component } from 'react'
 import DeleteButton from '../../Components/DeleteButton'
 import './TodoItem.scss'
 import { ITodoItemProps, ITodoItemState } from '../../types/authTypes'
-// import { getState } from '../../redux/store'
+import { getState } from '../../redux/store'
 
 export default class TodoItem extends Component<ITodoItemProps, ITodoItemState> {
   constructor(props: ITodoItemProps) {
     super(props)
     this.state = {
       check: props.isChecked,
+      props: getState().props,
     }
   }
 
   handleChange = (): void => {
     const { check } = this.state
     const { id } = this.props
-
-    const { checkTodo } = this.props
+    const { checkTodo } = this.state.props
     checkTodo(id)
     this.setState({ check: !check })
   }
 
   render() {
-    const { onDelete, id, getList, setEditable, editItem, title } = this.props
-    const { check } = this.state
+    const { id, title } = this.props
+    const { check, props } = this.state
+    const { onDelete, getList, setEditable, editItem } = props
     return (
       <li className="todoItem__listItem">
         <DeleteButton onDelete={onDelete} id={id} getList={getList} />

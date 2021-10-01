@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import { ITokens, IApi, IPostData } from './generalTypes'
+import { ITodo } from './todoTypes'
 
 // export interface ILoginPageProps {
 //   getStatus: (tokens: ITokens) => void
@@ -47,7 +48,7 @@ export interface IState {
   email: string
   password: string
   user: IUserController
-  isLogin: Boolean
+  itemList: []
 }
 
 export interface ITodoItemProps {
@@ -55,18 +56,16 @@ export interface ITodoItemProps {
   key: string
   id: string
   title: string
-  onDelete(id: string): Promise<void>
-  getList(): Promise<void>
-  editItem(e: React.UIEvent<HTMLHtmlElement> & React.KeyboardEvent): void
-  setEditable(e: React.UIEvent): void
-  checkTodo(id: string): Promise<void>
 }
 
 export interface ITodoItemState {
   check: Boolean
+  props: ITodoListProps
 }
 
-export interface ITodoListState {}
+// export interface ITodoListState {
+//   itemList: ITodo[]
+// }
 
 export interface ITodoListProps {
   itemList: [] | Error

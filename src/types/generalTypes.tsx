@@ -28,6 +28,7 @@ export interface IPostData {
   refreshToken?: string
   email?: string
   password?: string
+  isLoggedIn?: boolean
 }
 
 export interface IAppState {
@@ -48,4 +49,8 @@ export interface IApi {
   deleteItem(endPoint: string, data: IApiData): Promise<Response>
   patch(endPoint: string, data: IApiFetch): Promise<{}>
   post(endPoint: string, data: IPostData): Promise<void | IPost>
+}
+
+export interface IReducersState extends IAppState {
+  itemList: []
 }

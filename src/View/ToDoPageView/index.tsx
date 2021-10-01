@@ -1,28 +1,48 @@
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable react/no-access-state-in-setstate */
+/* eslint-disable react/no-unused-state */
 import React, { Component } from 'react'
 import Container from '../../Components/Container'
 import TextInput from '../../Components/TextInput'
 import './TodoPageView.scss'
 import TodoListView from '../TodoListView'
 import TodoController from '../../Controller/todoController'
-import { ITodoPageProps, ITodoPageState } from '../../types/todoTypes'
+import { ITodoPageState } from '../../types/todoTypes'
 import { ISpanContentEditable } from '../../types/componentsTypes'
-import { getState } from '../../redux/store'
+import { getState, request, dispatch } from '../../redux/store'
+import { Context } from '../../Context'
 
-export default class TodoPageView extends Component<ITodoPageProps, ITodoPageState> {
-  constructor(props: ITodoPageProps) {
+export default class TodoPageView extends Component<{}, ITodoPageState> {
+  static contextType = Context
+
+  constructor(props: {}) {
     super(props)
     this.state = {
       title: '',
-      todoController: new TodoController({ token: props.accessToken }),
+      todoController: new TodoController({
+        token: '',
+      }),
       items: [],
     }
   }
 
-  async componentDidMount() {
-    this.getList()
+  componentDidMount() {
+    const payload = {
+      onDelete: this.todoDelete,
+      getList: this.getList,
+      editItem: this.todoEdit,
+      setEditable: this.setEditable,
+      checkTodo: this.checkTodo,
+    }
+    dispatch({ type: 'ADD_PROPS', payload })
+    const fetchToken = async () => {
+      const { accessToken } = await this.context
+      this.setState({
+        todoController: new TodoController({
+          token: accessToken,
+        }),
+      })
+      this.getList()
+    }
+    fetchToken()
   }
 
   onChange = (e: React.FormEvent<HTMLInputElement>): void => {
@@ -31,9 +51,10 @@ export default class TodoPageView extends Component<ITodoPageProps, ITodoPageSta
   }
 
   getList = async (): Promise<void> => {
-    const { accessToken } = getState()
-    const list = await this.state.todoController.getTodoItems(accessToken)
-    this.setState({ items: list })
+    const { getTodoItems } = this.state.todoController
+    await request('GET_ITEMS', getTodoItems)
+    const { itemList } = getState()
+    this.setState({ items: itemList })
   }
 
   setEditable = (e: React.UIEvent): void => {
@@ -43,36 +64,34 @@ export default class TodoPageView extends Component<ITodoPageProps, ITodoPageSta
   }
 
   checkTodo = async (id: string): Promise<void> => {
-    await this.state.todoController.setTodoItemStatusDone(id)
+    const { setTodoItemStatusDone } = this.state.todoController
+    request('SET_CHECK_TODO', setTodoItemStatusDone, id)
     this.getList()
   }
 
   todoEdit = (e: React.UIEvent<HTMLHtmlElement> & React.KeyboardEvent): void => {
+    const { editTodoItem } = this.state.todoController
     if (e.keyCode === 13) {
       ;(e.currentTarget as unknown as ISpanContentEditable).contentEditable = false
       const { id } = e.currentTarget
-      const { editTodoItem } = this.state.todoController
-      editTodoItem(e, id)
+      request('EDIT_TODO', editTodoItem, { e, id })
     }
-
     this.getList()
   }
 
   todoDelete = async (id: string): Promise<void> => {
     const { deleteTodoItem } = this.state.todoController
-    await deleteTodoItem(id)
-    this.getList()
+    request('DELETE_TODO', deleteTodoItem, id)
+    await this.getList()
   }
 
   handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault()
-    const { todoController, title } = this.state
-    const { addTodoItem } = todoController
+    const { title } = this.state
+
+    const { addTodoItem } = this.state.todoController
     try {
-      const todo = await addTodoItem(title)
-      if (todo instanceof Error) {
-        console.log(todo.message)
-      }
+      await request('ADD_ITEM', addTodoItem, title)
       this.getList()
       this.setState({ title: '' })
     } catch (error: any) {
@@ -82,7 +101,6 @@ export default class TodoPageView extends Component<ITodoPageProps, ITodoPageSta
 
   render() {
     const { title } = this.state
-
     return (
       <Container>
         <form>
@@ -94,14 +112,7 @@ export default class TodoPageView extends Component<ITodoPageProps, ITodoPageSta
             </a>
           </div>
         </form>
-        <TodoListView
-          itemList={this.state.items}
-          onDelete={this.todoDelete}
-          getList={this.getList}
-          editItem={this.todoEdit}
-          setEditable={this.setEditable}
-          checkTodo={this.checkTodo}
-        />
+        <TodoListView />
       </Container>
     )
   }
